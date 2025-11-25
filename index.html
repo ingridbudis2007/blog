@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where to next?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-light: #ecf0f1;
+            --text-dark: #2c3e50;
+            --bg-light: #f8f9fa;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-light);
+            text-decoration: none;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url('images/eze.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: slideInLeft 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: slideInRight 1s ease;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            animation: bounce 2s infinite;
+        }
+
+        .cta-button:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            animation: fadeInLeft 1s ease;
+        }
+
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            animation: fadeInRight 1s ease;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            animation: fadeInUp 1s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-date {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .destination-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tab-button {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-button.active,
+        .tab-button:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .destination-content {
+            display: none;
+        }
+
+        .destination-content.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .destination-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 300px;
+            cursor: pointer;
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .destination-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .destination-card:hover .destination-overlay {
+            opacity: 1;
+        }
+
+        .destination-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .destination-name {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 250px;
+            cursor: pointer;
+            animation: fadeIn 1s ease;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.8);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .submit-button {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--primary-color);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .destination-tabs {
+                flex-wrap: wrap;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+        }
+
+        .lightbox-caption{
+          position: absolute;
+          right: 16px;
+          bottom: 16px;
+          background: rgba(0,0,0,0.55);
+          color: #fff;
+          padding: 8px 12px;
+          border-radius: 6px;
+          font-size: 0.95rem;
+          z-index: 2100;
+          max-width: 60%;
+          text-align: right;
+          pointer-events: none;
+        }
+
+        .hidden { display: none !important; }
+        .see-more-wrap { text-align: center; margin-top: 1rem; }
+        .see-more-wrap .see-more-btn { padding: 0.5rem 1rem; font-size: 0.95rem; border-radius: 999px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <i class="fas fa-globe-americas"></i> Where to next?
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#destinations" class="nav-link">Destinations</a></li>
+                <li><a href="#roadtrips" class="nav-link">Road Trips</a></li>
+                <li><a href="#citybreaks" class="nav-link">City Breaks</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Explore the World with Me</h1>
+            <p>Discover amazing destinations, hidden gems, and unforgettable experiences</p>
+            <a href="#about" class="cta-button">Start Your Journey</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">About Where to next?</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Your Ultimate Travel Companion</h3>
+                <p>Welcome to Where to next?, your passport to adventure and discovery. I am a passionate traveler dedicated to sharing the most incredible destinations, travel tips, and unforgettable experiences.</p>
+                <p>Whether you're seeking thrilling road trips, relaxing city breaks, or off-the-beaten-path adventures, I've got you covered. Join a community of explorers and let's make memories together!</p>
+                <ul style="list-style: none; padding: 1rem 0;">
+                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Expert travel guides</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Budget-friendly tips</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Hidden gems revealed</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Local insights</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <img src="images/me.jpg" alt="Travel adventure">
+            </div>
+        </div>
+    </section>
+
+   
+    <section id="blog" class="section">
+        <h2 class="section-title">Latest Travel Stories</h2>
+        <div class="blog-grid">
+            <article class="blog-card">
+                <img src="images/romefromup.jpg" alt="Rome">
+                <div class="blog-content">
+                    <div class="blog-date">October 30 - November 2, 2025</div>
+                    <h3 class="blog-title">Rome</h3>
+                    <p>A living museum where every street whispers a piece of history.</p>
+                    <a href="rome.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+            <article class="blog-card">
+                <img src="images/goslar.jpg" alt="Lower Saxony">
+                <div class="blog-content">
+                    <div class="blog-date">August 27 - September 16, 2025</div>
+                    <h3 class="blog-title">Lower Saxony</h3>
+                    <p>A land where medieval charm meets peaceful natural landscapes.</p>
+                    <a href="lower-saxony.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+            <article class="blog-card">
+                <img src="images/eze.jpg" alt="Cote d Azur">
+                <div class="blog-content">
+                    <div class="blog-date">June 27 - July 4, 2025</div>
+                    <h3 class="blog-title">Cote d'Azur</h3>
+                    <p>A shimmering coastline defined by glamour, sunshine, and effortless elegance.</p>
+                    <a href="cote d azur.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+            <article class="blog-card">
+                <img src="images/lauterbrunnen.jpg" alt="Swiss Alps">
+                <div class="blog-content">
+                    <div class="blog-date">April 18 - 25, 2025</div>
+                    <h3 class="blog-title">Conquering the Swiss Alps</h3>
+                    <p>A paradise of crystal lakes, alpine peaks, and serene precision.</p>
+                    <a href="swiss alps.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+            <article class="blog-card">
+                <img src="images/barcelonasquare.JPG" alt="Mountain adventure">
+                <div class="blog-content">
+                    <div class="blog-date">March 9 - 13, 2025</div>
+                    <h3 class="blog-title">Barcelona</h3>
+                    <p>A vibrant mosaic of art, beach life, and bold architectural flair.</p>
+                    <a href="barcelona.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+            <article class="blog-card">
+                <img src="images/paris.jpg" alt="Paris">
+                <div class="blog-content">
+                    <div class="blog-date">February 27 - March 2, 2025</div>
+                    <h3 class="blog-title">Paris</h3>
+                    <p>A celebration of elegance, romance, and effortless cultural charm.</p>
+                    <a href="paris.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+        </div>
+        <div class="see-more-wrap">
+          <button id="see-more-latest" class="see-more-btn cta-button">See more</button>
+        </div>
+    </section>
+
+    <section id="destinations" class="section">
+        <h2 class="section-title">Popular Destinations</h2>
+        <div class="destination-tabs">
+            <button class="tab-button active" onclick="showDestination('beaches')">Beaches</button>
+            <button class="tab-button" onclick="showDestination('mountains')">Mountains</button>
+            <button class="tab-button" onclick="showDestination('cities')">Cities</button>
+        </div>
+        <div id="beaches" class="destination-content active">
+            <a class="destination-card" href="dubrovnik.html" aria-label="Open Dubrovnik page">
+                <img src="images/dubrovniksea.jpg" alt="Dubrovnik">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Dubrovnik</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="dubrovnik.html" aria-label="Open Dubrovnik page">
+                <img src="images/kotor.jpg" alt="Montenegro">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Montenegro</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="cote d azur.html" aria-label="Open Cote d'Azur page">
+                <img src="images/antibesbeach.jpg" alt="Cote d'Azur">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Cote d'Azur</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="amalfi coast.html" aria-label="Open Amalfi Coast page">
+                <img src="images/sorrento.JPG" alt="Amalfi Coast">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Amalfi Coast</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="halkidiki.html" aria-label="Open Halkidiki page">
+                <img src="images/thassos.jpg" alt="Thassos">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Thassos</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="crete.html" aria-label="Open Crete page">
+                <img src="images/santorini.jpg" alt="Santorini">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Santorini</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="crete.html" aria-label="Open Crete page">
+                <img src="images/cretebeach.jpg" alt="Crete">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Crete</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="portugal.html" aria-label="Open Portugal page">
+                <img src="images/nazare.jpg" alt="Portugal">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Portugal</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="halkidiki.html" aria-label="Open Halkidiki page">
+                <img src="images/lagonissi.JPG" alt="Halkidiki">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Halkidiki</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="sicily.html" aria-label="Open Sicily page">
+                <img src="images/sicily beach.jpeg" alt="Sicily">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Sicily</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="cyprus.html" aria-label="Open Cyprus page">
+                <img src="images/Cyprus.jpeg" alt="Cyprus">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Cyprus</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="egypt.html" aria-label="Open Egypt page">
+                <img src="images/egyptsea.JPG" alt="Egypt">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Egypt</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="puglia.html" aria-label="Open Puglia page">
+                <img src="images/polignano a mare.jpeg" alt="Puglia">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Puglia</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="jordan.html" aria-label="Open Jordan page">
+                <img src="images/deadsea.jpg" alt="Jordan">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Jordan</h3>
+                </div>
+            </a>
+        </div>
+        <div id="mountains" class="destination-content">
+            <a class="destination-card" href="swiss alps.html" aria-label="Open Swiss Alps page">
+                <img src="images/swissalps.HEIC" alt="Swiss Alps">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Swiss Alps</h3>
+                </div>
+            </a>
+            <div class="destination-card">
+                <img src="images/rodnei.jpg" alt="Carpathians">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Carpathians</h3>
+                </div>
+            </div>
+            <a class="destination-card" href="munich.html" aria-label="Open Munich page">
+                <img src="images/germanalps.jpg" alt="German Alps">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">German Alps</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="lower-saxony.html" aria-label="Open Lower Saxony page">
+                <img src="images/harz.jpg" alt="Harz Mountains">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Harz Mountains</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="crete.html" aria-label="Open Crete page">
+                <img src="images/cretemountains.JPG" alt="Crete">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Crete</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="barcelona.html" aria-label="Open Barcelona page">
+                <img src="images/montserrat.JPG" alt="Montserrat">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Montserrat</h3>
+                </div>
+            </a>
+        </div>
+        <div id="cities" class="destination-content">
+            <a class="destination-card" href="portugal.html" aria-label="Open Portugal page">
+                <img src="images/towerlisbon.JPG" alt="Lisbon">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Lisbon</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="portugal.html" aria-label="Open Portgual page">
+                <img src="images/Porto.jpg" alt="Porto">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Porto</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="madrid.html" aria-label="Open Madrid page">
+                <img src="images/Madrid.jpg" alt="Madrid">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Madrid</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="barcelona.html" aria-label="Open Barcelona page">
+                <img src="images/batllo.jpg" alt="Barcelona">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Barcelona</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="cote d azur.html" aria-label="Open Cote d'Azur page">
+                <img src="images/monaco.JPG" alt="Monte Carlo">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Monte Carlo</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="london.html" aria-label="Open London page">
+                <img src="images/londonfromup.jpg" alt="London">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">London</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="cote d azur.html" aria-label="Open Cote d'Azur page">
+                <img src="images/nice.jpeg" alt="Nice">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Nice</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="paris.html" aria-label="Open Paris page">
+                <img src="images/Parisday.jpg" alt="Paris">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Paris</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="swiss alps.html" aria-label="Open Swiss Alps page">
+                <img src="images/Bern.jpg" alt="Bern">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Bern</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="swiss alps.html" aria-label="Open Swiss Alps page">
+                <img src="images/Lucerne.jpg" alt="Lucerne">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Lucerne</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="swiss alps.html" aria-label="Open Swiss Alps page">
+                <img src="images/Zurich.jpg" alt="Zurich">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Zurich</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="northern italy.html" aria-label="Open Northern Italy page">
+                <img src="images/Milan.jpg" alt="Milan">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Milan</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="venice.html" aria-label="Open Venice page">
+                <img src="images/venice canal.jpeg" alt="Venice">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Venice</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="sicily.html" aria-label="Open Sicily page">
+                <img src="images/Catania.jpeg" alt="Catania">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Catania</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="amalfi coast.html" aria-label="Open Amalfi Coast page">
+                <img src="images/Napoli.jpg" alt="Napoli">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Napoli</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="puglia.html" aria-label="Open Puglia page">
+                <img src="images/Bari.jpeg" alt="Bari">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Bari</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="lower-saxony.html" aria-label="Open Lower Saxony page">
+                <img src="images/Hannover.jpg" alt="Hannover">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Hannover</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="sweden.html" aria-label="Open Sweden page">
+                <img src="images/Stockholmwater.jpg" alt="Stockholm">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Stockholm</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="munich.html" aria-label="Open Munich page">
+                <img src="images/marienplatz.jpg" alt="Munich">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Munich</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="munich.html" aria-label="Open Munich page">
+                <img src="images/Innsbruck.jpg" alt="Innsbruck">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Innsbruck</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="central europe by car.html" aria-label="Open Central Europe by Car page">
+                <img src="images/schonbrunn.heic" alt="Viena">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Viena</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="central europe by car.html" aria-label="Open Central Europe by Car page">
+                <img src="images/prague.HEIC" alt="Prague">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Prague</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="central europe by car.html" aria-label="Open Central Europe by Car page">
+                <img src="images/Bratislava.heic" alt="Bratislava">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Bratislava</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="central europe by car.html" aria-label="Open Central Europe by Car page">
+                <img src="images/Budapest.heic" alt="Budapest">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Budapest</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="dubrovnik.html" aria-label="Open Dubrovnik page">
+                <img src="images/Dubrovnik.jpg" alt="Dubrovnik">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Dubrovnik</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="halkidiki.html" aria-label="Open Halkidiki page">
+                <img src="images/Thessaloniki.jpg" alt="Thessaloniki">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Thessaloniki</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="istanbul.html" aria-label="Open Istanbul page">
+                <img src="images/Istanbulfromup.jpg" alt="Istanbul">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Istanbul</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="crete.html" aria-label="Open Crete page">
+                <img src="images/Chania.jpg" alt="Chania">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Chania</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="crete.html" aria-label="Open Crete page">
+                <img src="images/Heraklion.jpg" alt="Heraklion">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Heraklion</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="jordan.html" aria-label="Open Jordan page">
+                <img src="images/Petra.jpg" alt="Petra">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Petra</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="jordan.html" aria-label="Open Jordan page">
+                <img src="images/Amman.jpg" alt="Amman">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Amman</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="jordan.html" aria-label="Open Jordan page">
+                <img src="images/Aqaba.jpg" alt="Aqaba">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Aqaba</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="egypt.html" aria-label="Open Egypt page">
+                <img src="images/Hurghada.jpeg" alt="Hurghada">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Hurghada</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="egypt.html" aria-label="Open Egypt page">
+                <img src="images/Luxor.jpeg" alt="Luxor">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Luxor</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="berlin.html" aria-label="Open Berlin page">
+                <img src="images/brandenburger.JPG" alt="Berlin">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Berlin</h3>
+                </div>
+            </a>
+            <a class="destination-card" href="rome.html" aria-label="Open Rome page">
+                <img src="images/colosseo.JPG" alt="Rome">
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Rome</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="roadtrips" class="section">
+        <h2 class="section-title">Epic Tours</h2>
+        <div class="blog-grid">
+            <article class="blog-card">
+                <img src="images/gottingen.JPG" alt="Lower Saxony">
+                <div class="blog-content">
+                    <div class="blog-date">20 Days Adventure</div>
+                    <h3 class="blog-title">Lower Saxony</h3>
+                    <p>A land where medieval charm meets peaceful natural landscapes.</p>
+                    <a href="lower-saxony.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/antibes.JPG" alt="Cote d Azur">
+                <div class="blog-content">
+                    <div class="blog-date">8 Days Adventure</div>
+                    <h3 class="blog-title">Cote d'Azur</h3>
+                    <p>A shimmering coastline defined by glamour, sunshine, and effortless elegance.</p>
+                    <a href="cote d azur.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/colmar.JPG" alt="Switzerland">
+                <div class="blog-content">
+                    <div class="blog-date">7 Days Adventure</div>
+                    <h3 class="blog-title">Switzerland</h3>
+                    <p>A paradise of crystal lakes, alpine peaks, and serene precision.</p>
+                    <a href="swiss alps.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/balos.jpg" alt="Crete">
+                <div class="blog-content">
+                    <div class="blog-date">7 Days Adventure</div>
+                    <h3 class="blog-title">Crete</h3>
+                    <p>A vibrant blend of ancient myths, warm hospitality, and turquoise seas.</p>
+                    <a href="crete.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/munichfromup.jpg" alt="Northern Italy">
+                <div class="blog-content">
+                    <div class="blog-date">5 Days Adventure</div>
+                    <h3 class="blog-title">Northern Italy</h3>
+                    <p>A region shaped by refined tastes, scenic lakes, and timeless sophistication.</p>
+                    <a href="northern italy.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/stockholm.JPG" alt="Sweden">
+                <div class="blog-content">
+                    <div class="blog-date">5 Days Adventure</div>
+                    <h3 class="blog-title">Sweden</h3>
+                    <p>A perfect balance of minimalist beauty, wild nature, and urban creativity.</p>
+                    <a href="sweden.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/capri.JPG" alt="Amalfi Coast">
+                <div class="blog-content">
+                    <div class="blog-date">4 Days Adventure</div>
+                    <h3 class="blog-title">Italy's Amalfi Coast</h3>
+                    <p>A dramatic stretch of cliffs, pastel villages, and sea views that never fade.</p>
+                    <a href="amalfi coast.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/vourvourou.JPG" alt="Halkidiki">
+                <div class="blog-content">
+                    <div class="blog-date">14 Days Adventure</div>
+                    <h3 class="blog-title">Halkidiki</h3>
+                    <p>A trio of peninsulas where pine forests meet emerald-blue waters.</p>
+                    <a href="halkidiki.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/wadirum.jpg" alt="Jordan">
+                <div class="blog-content">
+                    <div class="blog-date">7 Days Adventure</div>
+                    <h3 class="blog-title">Jordan</h3>
+                    <p>A journey through golden deserts, sacred sites, and genuine warmth.</p>
+                    <a href="jordan.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/leiria.JPG" alt="Portugal">
+                <div class="blog-content">
+                    <div class="blog-date">7 Days Adventure</div>
+                    <h3 class="blog-title">Portugal</h3>
+                    <p>A soulful escape filled with ocean breezes, comforting food, and colorful streets.</p>
+                    <a href="portugal.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/vienaopera.HEIC" alt="Central Europe">
+                <div class="blog-content">
+                    <div class="blog-date">12 Days Adventure</div>
+                    <h3 class="blog-title">Central Europe by car</h3>
+                    <p>A road trip that reveals cultures, castles, and landscapes changing at every border.</p>
+                    <a href="central europe by car.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/temple.jpeg" alt="Egypt">
+                <div class="blog-content">
+                    <div class="blog-date">6 Days Adventure</div>
+                    <h3 class="blog-title">Egypt</h3>
+                    <p>A timeless world of ancient wonders, vivid markets, and desert horizons.</p>
+                    <a href="egypt.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/lecce.jpeg" alt="Puglia">
+                <div class="blog-content">
+                    <div class="blog-date">5 Days Adventure</div>
+                    <h3 class="blog-title">Puglia</h3>
+                    <p>A sun-soaked corner where whitewashed villages and olive groves shape daily life.</p>
+                    <a href="puglia.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+        </div>
+        <div class="see-more-wrap">
+          <button id="see-more-roadtrips" class="see-more-btn cta-button">See more</button>
+        </div>
+    </section>
+
+    <section id="citybreaks" class="section">
+        <h2 class="section-title">Perfect City Breaks</h2>
+        <div class="blog-grid">
+            <article class="blog-card">
+                <img src="images/colosseo.jpg" alt="Rome">
+                <div class="blog-content">
+                    <div class="blog-date">Weekend Guide</div>
+                    <h3 class="blog-title">Rome</h3>
+                    <p>A living museum where every street whispers a piece of history.</p>
+                    <a href="rome.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/brandenburger.JPG" alt="Berlin">
+                <div class="blog-content">
+                    <div class="blog-date">3 Days Guide</div>
+                    <h3 class="blog-title">Berlin</h3>
+                    <p>A creative, ever-evolving city built on contrast and reinvention.</p>
+                    <a href="berlin.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/barcelonasquare.JPG" alt="Barcelona">
+                <div class="blog-content">
+                    <div class="blog-date">4 Days Guide</div>
+                    <h3 class="blog-title">Barcelona's Best Kept Secrets</h3>
+                    <p>A vibrant mosaic of art, beach life, and bold architectural flair.</p>
+                    <a href="barcelona.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/tiumphalarch.JPG" alt="Paris">
+                <div class="blog-content">
+                    <div class="blog-date">Weekend Guide</div>
+                    <h3 class="blog-title">Romantic Paris in 72 Hours</h3>
+                    <p>A celebration of elegance, romance, and effortless cultural charm.</p>
+                    <a href="paris.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/Madrid.jpg" alt="Madrid">
+                <div class="blog-content">
+                    <div class="blog-date">3 Days Guide</div>
+                    <h3 class="blog-title">Madrid</h3>
+                    <p>A city pulsing with energy, warm nights, and irresistible passion.</p>
+                    <a href="madrid.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/hagia.jpg" alt="Istanbul">
+                <div class="blog-content">
+                    <div class="blog-date">Weekend Guide</div>
+                    <h3 class="blog-title">Magical Istanbul Getaway</h3>
+                    <p>A crossroads of worlds where traditions, scents, and stories intertwine.</p>
+                    <a href="istanbul.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/Londoneye.jpg" alt="London">
+                <div class="blog-content">
+                    <div class="blog-date">4 Days Guide</div>
+                    <h3 class="blog-title">London</h3>
+                    <p>A global hub where classic landmarks meet modern rhythm.</p>
+                    <a href="london.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/Dubrovnik.jpg" alt="Dubrovnik">
+                <div class="blog-content">
+                    <div class="blog-date">3 Days Guide</div>
+                    <h3 class="blog-title">Dubrovnik</h3>
+                    <p>A coastal fortress city glowing with sunlit stone and sapphire waters.</p>
+                    <a href="dubrovnik.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/munichnight.jpg" alt="Munich">
+                <div class="blog-content">
+                    <div class="blog-date">3 Days Guide</div>
+                    <h3 class="blog-title">Munich</h3>
+                    <p>A blend of Bavarian tradition, relaxed lifestyle, and refined culture.</p>
+                    <a href="munich.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/catania from up.jpeg" alt="Sicily">
+                <div class="blog-content">
+                    <div class="blog-date">3 Days Guide</div>
+                    <h3 class="blog-title">Sicily</h3>
+                    <p>An island shaped by fiery landscapes, ancient legacies, and bold flavors.</p>
+                    <a href="sicily.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/venice buildings.jpeg" alt="Venice">
+                <div class="blog-content">
+                    <div class="blog-date">3 Days Guide</div>
+                    <h3 class="blog-title">Venice</h3>
+                    <p>A dreamlike maze of canals, bridges, and ethereal beauty.</p>
+                    <a href="venice.html" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Read More</a>
+                </div>
+            </article>
+        </div>
+        <div class="see-more-wrap">
+          <button id="see-more-citybreaks" class="see-more-btn cta-button">See more</button>
+        </div>
+    </section>
+
+    <section id="gallery" class="section">
+        <h2 class="section-title">Travel Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openLightbox('images/altenationalgalerie.jpg','Altenationalgalerie, Berlin')">
+                <img src="images/altenationalgalerie.jpg" alt="Altenationalgalerie, Berlin">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/amman.jpg','Amman, Jordan')">
+                <img src="images/amman.jpg" alt="Amman, Jordan">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/ammantheatre.jpg','Amman Theatre, Jordan')">
+                <img src="images/ammantheatre.jpg" alt="Amman Theatre, Jordan">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/antibes.JPG','Antibes')">
+                <img src="images/antibes.JPG" alt="Antibes">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/antibesbeach.jpg','Antibes Beach')">
+                <img src="images/antibesbeach.jpg" alt="Antibes Beach">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/balos.jpg','Balos, Crete')">
+                <img src="images/balos.jpg" alt="Balos, Crete">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/barcelonasquare.JPG','Barcelona')">
+                <img src="images/barcelonasquare.JPG" alt="Barcelona — Plaça">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Bari.jpeg','Bari')">
+                <img src="images/Bari.jpeg" alt="Bari">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/batllo.jpg','Casa Batlló, Barcelona')">
+                <img src="images/batllo.jpg" alt="Casa Batlló, Barcelona">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Bern.jpg','Bern')">
+                <img src="images/Bern.jpg" alt="Bern, Switzerland">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Bratislava.heic','Bratislava')">
+                <img src="images/Bratislava.heic" alt="Bratislava">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/brandenburger.JPG','Brandenburg Gate, Berlin')">
+                <img src="images/brandenburger.JPG" alt="Brandenburg Gate, Berlin">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/budapest.heic','Budapest')">
+                <img src="images/budapest.heic" alt="Budapest">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/capri.JPG','Capri')">
+                <img src="images/capri.JPG" alt="Capri">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Catania from up.jpeg','Catania from above')">
+                <img src="images/Catania from up.jpeg" alt="Catania, Sicily">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Chania.jpg','Chania')">
+                <img src="images/Chania.jpg" alt="Chania, Crete">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/colmar.JPG','Colmar')">
+                <img src="images/colmar.JPG" alt="Colmar">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/colosseo.jpg','Colosseum, Rome')">
+                <img src="images/colosseo.jpg" alt="Colosseum, Rome">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/cretebeach.jpg','Elafonisi Beach, Crete')">
+                <img src="images/cretebeach.jpg" alt="Crete — Beach">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/cretemountains.JPG','Mountains, Crete')">
+                <img src="images/cretemountains.JPG" alt="Crete — Mountains">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Cyprus.jpeg','Mediterranean Sea, Cyprus')">
+                <img src="images/Cyprus.jpeg" alt="Cyprus">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/deadsea.jpg','Dead Sea, Jordan')">
+                <img src="images/deadsea.jpg" alt="Dead Sea — Jordan">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Dubrovnik.jpg','Dubrovnik')">
+                <img src="images/Dubrovnik.jpg" alt="Dubrovnik">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/dubrovniksea.jpg','Dubrovnik seaside')">
+                <img src="images/dubrovniksea.jpg" alt="Dubrovnik — Sea">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/eze.jpg','Èze, French Riviera')">
+                <img src="images/eze.jpg" alt="Èze — French Riviera">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/egyptsea.jpg','Red Sea, Egpyt')">
+                <img src="images/egyptsea.jpg" alt="Egypt — Sea">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/gottingen.JPG','Göttingen')">
+                <img src="images/gottingen.JPG" alt="Göttingen">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/germanalps.jpg','German Alps')">
+                <img src="images/germanalps.jpg" alt="German Alps">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/goslar.jpg','Goslar')">
+                <img src="images/goslar.jpg" alt="Goslar">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/harz.jpg','Harz Mountains')">
+                <img src="images/harz.jpg" alt="Harz Mountains">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Hannover.jpg','Hannover')">
+                <img src="images/Hannover.jpg" alt="Hannover">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Heraklion.jpg','Heraklion')">
+                <img src="images/Heraklion.jpg" alt="Heraklion">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/hagia.jpg','Hagia Sophia, Istanbul')">
+                <img src="images/hagia.jpg" alt="Hagia Sophia, Istanbul">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Istanbulfromup.jpg','Istanbul from above')">
+                <img src="images/Istanbulfromup.jpg" alt="Istanbul — Aerial">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Innsbruck.jpg','Innsbruck')">
+                <img src="images/Innsbruck.jpg" alt="Innsbruck">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/lagonissi.JPG','Lagonisi, Halkidiki')">
+                <img src="images/lagonissi.JPG" alt="Lagonissi">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/lauterbrunnen.jpg','Lauterbrunnen')">
+                <img src="images/lauterbrunnen.jpg" alt="Lauterbrunnen">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/leiria.JPG','Leiria')">
+                <img src="images/leiria.JPG" alt="Leiria">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/londonfromup.jpg','London from above')">
+                <img src="images/londonfromup.jpg" alt="London — Aerial">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Londoneye.jpg','London Eye')">
+                <img src="images/Londoneye.jpg" alt="London Eye">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Lucerne.jpg','Lucerne')">
+                <img src="images/Lucerne.jpg" alt="Lucerne">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Madrid.jpg','Madrid')">
+                <img src="images/Madrid.jpg" alt="Madrid">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Milan.jpg','Milan')">
+                <img src="images/Milan.jpg" alt="Milan">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/monaco.JPG','Monte Carlo')">
+                <img src="images/monaco.JPG" alt="Monte Carlo">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/montserrat.JPG','Montserrat')">
+                <img src="images/montserrat.JPG" alt="Montserrat">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/munichfromup.jpg','Munich from above')">
+                <img src="images/munichfromup.jpg" alt="Munich — Aerial">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/munichnight.jpg','Munich at night')">
+                <img src="images/munichnight.jpg" alt="Munich — Night">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/nazare.jpg','Nazaré')">
+                <img src="images/nazare.jpg" alt="Nazaré">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Napoli.jpg','Napoli')">
+                <img src="images/Napoli.jpg" alt="Napoli">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/nice.jpeg','Nice')">
+                <img src="images/nice.jpeg" alt="Nice">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Lecce.jpeg','Lecce')">
+                <img src="images/Lecce.jpeg" alt="Lecce">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/taormina.jpeg','Taormina')">
+                <img src="images/taormina.jpeg" alt="Taormina">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Sicily beach.jpeg','Isola Bella, Sicily')">
+                <img src="images/Sicily beach.jpeg" alt="Isola Bella, Sicily">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/catania.jpeg','Catania')">
+                <img src="images/catania.jpeg" alt="Catania">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/polignano a mare.jpeg','Polignano a Mare')">
+                <img src="images/polignano a mare.jpeg" alt="Polignano a Mare">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/alberobello.jpeg','Alberobello')">
+                <img src="images/alberobello.jpeg" alt="Alberobello">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Paris.jpg','Paris')">
+                <img src="images/Paris.jpg" alt="Paris">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Parisday.jpg','Paris during the day')">
+                <img src="images/Parisday.jpg" alt="Paris during the day">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/prague.HEIC','Prague')">
+                <img src="images/prague.HEIC" alt="Prague">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/romefromup.jpg','Rome from above')">
+                <img src="images/romefromup.jpg" alt="Rome — Aerial">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/santorini.jpg','Santorini')">
+                <img src="images/santorini.jpg" alt="Santorini">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/sorrento.JPG','Sorrento')">
+                <img src="images/sorrento.JPG" alt="Sorrento">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/schonbrunn.heic','Schönbrunn, Vienna')">
+                <img src="images/schonbrunn.heic" alt="Schönbrunn, Vienna">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Stockholmwater.jpg','Stockholm')">
+                <img src="images/Stockholmwater.jpg" alt="Stockholm — Water">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/stockholm.JPG','Northern Museum, Stockholm')">
+                <img src="images/stockholm.JPG" alt="Stockholm">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/swissalps.HEIC','Swiss Alps')">
+                <img src="images/swissalps.HEIC" alt="Swiss Alps">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/thassos.jpg','Thassos')">
+                <img src="images/thassos.jpg" alt="Thassos">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Thessaloniki.jpg','Thessaloniki')">
+                <img src="images/Thessaloniki.jpg" alt="Thessaloniki">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/towerlisbon.JPG','Belem Tower, Lisbon')">
+                <img src="images/towerlisbon.JPG" alt="Tower, Lisbon">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/vienaopera.HEIC','Vienna Opera')">
+                <img src="images/vienaopera.HEIC" alt="Vienna Opera">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Venice canal.jpeg','Venice')">
+                <img src="images/Venice canal.jpeg" alt="Venice">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/venice window.jpeg','The Bridge of Sighs, Venice')">
+                <img src="images/venice window.jpeg" alt="The Bridge of Sighs, Venice">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/temple.jpeg','Temple of Hatshepsut, Luxor')">
+                <img src="images/temple.jpeg" alt="Temple of Hatshepsut, Luxor">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Luxor.jpeg','Luxor Temple')">
+                <img src="images/Luxor.jpeg" alt="Luxor Temple">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/red sea egypt.jpeg','Red Sea, Egypt')">
+                <img src="images/red sea egypt.jpeg" alt="Red Sea, Egypt">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('images/Hurghada.jpeg','Hurghada')">
+                <img src="images/Hurghada.jpeg" alt="Hurghada">
+                <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+        </div>
+        <div class="see-more-wrap">
+          <button id="see-more-gallery" class="see-more-btn cta-button">See more</button>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-container">
+            <div class="contact-form">
+                <form id="contactForm" action="https://formsubmit.co/ingrid.budis2007@gmail.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+            <div id="success-message" class="hidden" style="margin-top:1rem; padding:1rem; background:#e6ffed; border:1px solid #b7f0c6; color:#166534; border-radius:6px;">
+                Thank you! Your message has been sent successfully.
+            </div>
+            <div class="contact-info">
+                <h3>Connect With Us</h3>
+                <p>Follow my adventures and stay updated with the latest travel tips and destination guides.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://facebook.com" target="_blank" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://youtube.com" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="mailto:ingrid.budis2007@gmail.com" class="social-link">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <p><i class="fas fa-map-marker-alt" style="color: var(--accent-color);"></i> Based in Piatra Neamt</p>
+                    <p><i class="fas fa-envelope" style="color: var(--accent-color);"></i> Email: ingrid.budis2007@gmail.com</p>
+                    <p><i class="fas fa-phone" style="color: var(--accent-color);"></i> Phone: +4 0757606222</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close" aria-hidden="true">&times;</span>
+        <img id="lightbox-img" src="" alt="Lightbox image">
+        <div id="lightbox-caption" class="lightbox-caption" aria-hidden="true"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Where to next? All rights reserved. | Made by travelers with <i class="fas fa-heart" style="color: var(--accent-color);"></i> for travelers</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(44, 62, 80, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(44, 62, 80, 0.95)';
+            }
+        });
+
+        function showDestination(destination) {
+            document.querySelectorAll('.destination-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(destination).classList.add('active');
+            
+            event.target.classList.add('active');
+        }
+
+        function openLightbox(imageSrc, locationText) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const caption = document.getElementById('lightbox-caption');
+            lightboxImg.src = imageSrc;
+            caption.textContent = locationText || '';
+            caption.setAttribute('aria-hidden', locationText ? 'false' : 'true');
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            lightbox.tabIndex = -1;
+            lightbox.focus();
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const caption = document.getElementById('lightbox-caption');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            lightboxImg.src = '';
+            caption.textContent = '';
+            caption.setAttribute('aria-hidden','true');
+        }
+
+        document.addEventListener('keydown', function(e){
+          const lightbox = document.getElementById('lightbox');
+          if((e.key === 'Escape' || e.key === 'Esc') && lightbox && lightbox.style.display === 'flex'){
+            closeLightbox();
+          }
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = this;
+            const formData = new FormData(form);
+            try {
+                const resp = await fetch('https://formsubmit.co/ajax/ingrid.budis2007@gmail.com', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!resp.ok) throw new Error('Network response was not ok');
+                
+                const successEl = document.getElementById('success-message');
+                if (successEl) {
+                    successEl.classList.remove('hidden');
+                    form.reset();
+                    setTimeout(()=> successEl.classList.add('hidden'), 5000);
+                } else {
+                    form.reset();
+                }
+            } catch (err) {
+                console.error(err);
+                alert('An error occurred while sending your message. Please try again or email directly to ingrid.budis2007@gmail.com');
+            }
+        });
+    </script>
+    <script>
+(function(){
+  function paginate(sectionId, initial, batch, btnId){
+    const section = document.getElementById(sectionId);
+    if(!section) return;
+    const grid = section.querySelector('.blog-grid, .gallery-grid');
+    if(!grid) return;
+    const items = Array.from(grid.querySelectorAll('.blog-card'));
+    const galleryItems = items.length ? items : Array.from(grid.querySelectorAll('.gallery-item'));
+    const allItems = items.length ? items : galleryItems;
+    let visible = initial;
+    allItems.forEach((it, i) => { if(i >= visible) it.classList.add('hidden'); });
+    const btn = document.getElementById(btnId);
+    if(!btn) return;
+    if(allItems.length <= visible) { btn.style.display = 'none'; return; }
+    btn.addEventListener('click', ()=>{
+      const next = Math.min(visible + batch, allItems.length);
+      for(let i = visible; i < next; i++){
+        if(allItems[i]) allItems[i].classList.remove('hidden');
+      }
+      visible = next;
+      if(visible >= allItems.length) btn.style.display = 'none';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    paginate('blog', 3, 3, 'see-more-latest');           
+    paginate('roadtrips', 6, 6, 'see-more-roadtrips');  
+    paginate('citybreaks', 6, 6, 'see-more-citybreaks');
+    paginate('gallery', 4, 4, 'see-more-gallery');      
+  });
+})();
+</script>
+</body>
+</html>

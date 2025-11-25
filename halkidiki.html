@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Halkidiki — Where to next?</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root{ --primary:#2c3e50; --text-light:#ecf0f1; --accent:#e74c3c; --transition:all .3s ease; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family: Arial, sans-serif;color:#222;background:#f7f7f7}
+    .navbar{position:fixed;top:0;width:100%;background:rgba(44,62,80,0.95);backdrop-filter:blur(6px);z-index:1000}
+    .nav-container{max-width:1200px;margin:0 auto;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+    .logo{color:var(--text-light);text-decoration:none;font-weight:bold}
+    .nav-menu{display:flex;list-style:none;gap:1rem}
+    .nav-link{color:var(--text-light);text-decoration:none;padding:0.25rem}
+    .nav-link:hover{opacity:.9}
+    .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer}
+    .hamburger span{display:block;width:24px;height:3px;background:var(--text-light);border-radius:2px;transition:transform .25s,opacity .25s}
+    @media (max-width:800px){
+      .hamburger{display:flex}
+      .nav-menu{position:fixed;left:-100%;top:64px;right:auto;flex-direction:column;background:rgba(44,62,80,0.98);width:260px;padding:1.5rem;gap:1rem;height:calc(100% - 64px);transition:left .25s ease;z-index:1100}
+      .nav-menu.active{left:0}
+      .nav-menu li{margin:0}
+    }
+    .container{max-width:1100px;margin:120px auto 3rem;padding:1rem}
+    .hero{background:#fff;padding:2rem;border-radius:10px;box-shadow:0 6px 22px rgba(0,0,0,.06)}
+    .hero h1{font-size:2rem;margin-bottom:.5rem}
+    .hero p{color:#444;line-height:1.6}
+    .back-link{display:inline-block;margin-top:1rem;color:var(--accent);text-decoration:none}
+    .content img{max-width:100%;border-radius:8px;margin-top:1rem}
+    footer{margin:3rem 0 1rem;text-align:center;color:#666}
+    @media (max-width:800px){ .nav-menu{display:flex} }
+  </style>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Main">
+    <div class="nav-container">
+      <a href="index.html#home" class="logo">
+        <i class="fas fa-globe-americas"></i> Where to next?
+      </a>
+      <div class="hamburger" aria-hidden="false" aria-label="Toggle menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-menu" role="menubar">
+        <li><a href="index.html#home" class="nav-link">Home</a></li>
+        <li><a href="index.html#about" class="nav-link">About</a></li>
+        <li><a href="index.html#blog" class="nav-link">Blog</a></li>
+        <li><a href="index.html#destinations" class="nav-link">Destinations</a></li>
+        <li><a href="index.html#roadtrips" class="nav-link">Road Trips</a></li>
+        <li><a href="index.html#citybreaks" class="nav-link">City Breaks</a></li>
+        <li><a href="index.html#gallery" class="nav-link">Gallery</a></li>
+        <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container" role="main">
+    <article class="hero" aria-labelledby="ls-title">
+      <h1 id="ls-title">Halkidiki: History, Culture & Cuisine</h1>
+      <p><strong>Halkidiki</strong>, a beautiful peninsula in northern Greece, is known for its stunning beaches, rich history, and vibrant culture. From the ancient ruins of Olynthos to the lively towns of Kassandra, Halkidiki offers a diverse and memorable experience for every traveler.</p>
+      <a class="back-link" href="index.html#blog">&larr; Back to Blog</a>
+    </article>
+
+    <section class="content" aria-labelledby="ls-sub">
+      <h2 id="ls-sub" style="margin-top:1.5rem">Highlights</h2>
+      <ul style="margin-top:.5rem;line-height:1.6">
+        <li><strong>Three peninsulas</strong> — diverse beaches and unique landscapes.</li>
+        <li><strong>Emerald waters</strong> — calm bays perfect for snorkeling and swimming.</li>
+        <li><strong>Traditional villages</strong> — local tavernas and relaxed atmosphere.</li>
+        <li><strong>Nature escapes</strong> — forested hills and scenic coastal paths.</li>
+      </ul>
+
+      <p style="margin-top:1rem">Practical tips: rent a car for beach hopping, carry cash for small tavernas, and visit early to secure good parking spots.</p>
+
+      <img src="images/thessaloniki.JPG" alt="Halkidiki">
+
+      <h3 style="margin-top:1.25rem">Plan a trip</h3>
+      <p>Suggested 3-day itinerary: Day 1 — explore Kassandra beaches; Day 2 — Sithonia’s coves; Day 3 — traditional villages or boat trips.</p>
+
+      <p style="margin-top:1rem"><a class="back-link" href="index.html#blog">&larr; Return to Blog</a></p>
+    </section>
+
+  </main>
+
+  <footer>
+        <p>&copy; 2025 Where to next? All rights reserved. | Made by travelers with <i class="fas fa-heart" style="color: var(--accent-color);"></i> for travelers</p>
+    </footer>
+
+  <script>
+    (function(){
+      const ham = document.querySelector('.hamburger');
+      const menu = document.querySelector('.nav-menu');
+      if(!ham || !menu) return;
+      const toggle = ()=> {
+        ham.classList.toggle('active');
+        menu.classList.toggle('active');
+      };
+      ham.addEventListener('click', toggle);
+      ham.addEventListener('keydown', (e)=> { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+      document.querySelectorAll('.nav-menu .nav-link').forEach(a=>{
+        a.addEventListener('click', ()=> {
+          if(menu.classList.contains('active')) {
+            menu.classList.remove('active');
+            ham.classList.remove('active');
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
